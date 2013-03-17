@@ -21,18 +21,32 @@ requires:
 
 ...
 */
+Element.Properties.attach = {
 
+	//Usage:
+	//    new Element('div',{ attach:[this] }); //this.element now refers to div
+	//    new Element('div',{ attach:[this,'myproperty'] }); //this.myproperty now refers to div
+	//    ['div',{attach:[this,'myproperty'] }].rendAr();
 
+    set: function(object) {
+
+        object[0][ object[1]||'element' ] = this;
+
+    }
+};
 Array.implement({
-   rendAr: function() {
-      var el = [];
-         this.each(function(item) {
-            if (typeOf(item) == 'element') el.push(item);
-            else if (typeOf(item) == 'string') el.push(new Element(item));
-            else if (typeOf(item) == 'elements') item.each(function(i) {el.push(i);});
-            else if (typeOf(item) == 'array') el[el.length - 1].adopt(item.rendAr());
-            else if (typeOf(item) == 'object') el[el.length - 1].set(item);
+
+    rendAr: function() {
+      var elements = [],type;
+        this.each( function(item){
+            type = typeOf(item);
+            if (type == 'element')  elements.push(item);
+            else if (type == 'string')   elements.push(new Element(item));
+            else if (type == 'object')   elements.getLast().set(item);
+            else if (type == 'array')    elements.getLast().adopt(item.rendAr());
+            else if (type == 'elements') elements.append(item);
          });
-      return el[1] ? new Elements(el) : el[0]; 
+      return elements[1] ? new Elements(elements) : elements[0];
    }
+
 });
