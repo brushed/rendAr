@@ -106,7 +106,8 @@ No problem.. remember your just dealing with an array structure - juggle it how 
 See '.\Demo\index.htm' for more.
 
 
-Attach to Template elements:
+Attach to Template elements: (new)
+----------------------------------
 
 You can directly attach to any of the rendered elements
 
@@ -117,16 +118,16 @@ You can directly attach to any of the rendered elements
 			'li[text=World]'
 		]
 	]).rendAr());
-	this.myproperty.show();	//this.myproperty points tho the generated ul element
+	this.myproperty.show();	//this.myproperty now refers to the generated ul element
 
-By default, attach connects with the 'element' property.
+If you do not specifcy a property name, _attach_ will connect to the 'element' property.
 
 	['div',{attach:[this]}
 	].rendAr();
 
-	this.element.show();   //this.element points to the generated div element
+	this.element.show();   //this.element now refers to the generated div element
 
-BTW, you can also use this attach feature as part of the regular mootools api.
+BTW, you can also use _attach_ as part of the regular mootools api.
 
 	new Element('div',{ attach:[this] }); //this.element now refers to div
 
