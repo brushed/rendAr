@@ -3,7 +3,7 @@ rendAr
 
 A neat way to generate complex HTML objects from clean elegant syntax.
 
-MooTools awesome Slick engine can create elements from declarations like 'tag.class#id'. rendAr simply feeds an array structure (template) through the Slick engine. It's an easy way to generate complex DOM structures complete with styles and events. 
+MooTools awesome Slick engine can create elements from declarations like 'tag.class#id'. rendAr simply feeds an array structure (template) through the Slick engine. It's an easy way to generate complex DOM structures complete with styles and events.
 
 Why use rendAr? It's trully tiny **The minified version weighs in at just 358b** - thats right, less than 1kb. The array structure is intuitive, takes a moment to master, and is easily readable. It's Super simple to handle, just declare your array, and rendAr it.
 
@@ -16,7 +16,7 @@ Templates are definied in an array structure, the arrays can contain:
  - element declarations (a string in Slick engine markup format)
  - arrays (will be adopted by previous element)
  - objects (apply styles and events to previous element)
- 
+
 rendAr is implemented as a function in the Array class. So simply declare your array, and call rendAr().
 
 The format for the Slick engine markup is:
@@ -39,7 +39,7 @@ A simple example:
 	];
 	var element = template.rendAr();
 	$$('body').adopt(element);
-	
+
 On the fly:
 
 	$$('body').adopt(([
@@ -48,7 +48,7 @@ On the fly:
 			'li[text=World]'
 		]
 	]).rendAr());
-	
+
 Setting styles & events:
 
 	var template = [
@@ -72,7 +72,7 @@ Dynamic Templates:
 Easy.. just pass a function which return's the template you require:
 
 	var template = function(foobar) { return [
-		'ul.listClass#listId', 
+		'ul.listClass#listId',
 			[
 			'li[text=Hello]',
 			'li[text=' + foobar + ']'
@@ -80,7 +80,7 @@ Easy.. just pass a function which return's the template you require:
 		];
 	};
 	$$('body').adopt(template('World').rendAr());
-	
+
 Nested Templates:
 
 No problem.. remember your just dealing with an array structure - juggle it how you like:
@@ -93,17 +93,46 @@ No problem.. remember your just dealing with an array structure - juggle it how 
 
 	//then this is the wrong way (but will work anyway):
 	$$('body').adopt(([
-		'ul.listClass#listId', 
+		'ul.listClass#listId',
 			[ template.rendAr() ]
 	]).rendAr());
 
 	//and this is the right way:
 	$$('body').adopt(([
-		'ul.listClass#listId', 
+		'ul.listClass#listId',
 			template
 	]).rendAr());
-	
+
 See '.\Demo\index.htm' for more.
+
+
+Attach to Template elements:
+
+You can directly attach to any of the rendered elements
+
+
+	$$('body').adopt(([
+		'ul.listClass#listId', {attach:[this,'myproperty'] }, [
+			'li[text=Hello]',
+			'li[text=World]'
+		]
+	]).rendAr());
+	this.myproperty.show();	//this.myproperty points tho the generated ul element
+
+By default, attach connects with the 'element' property.
+
+	['div',{attach:[this]}
+	].rendAr();
+
+	this.element.show();   //this.element points to the generated div element
+
+BTW, you can also use this attach feature as part of the regular mootools api.
+
+	new Element('div',{ attach:[this] }); //this.element now refers to div
+
+	new Element('div',{ attach:[this,'myproperty'] }); //this.myproperty now refers to div
+
+
 
 Known Bugs
 ----------
