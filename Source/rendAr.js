@@ -41,9 +41,8 @@ Array.implement({
       var elements = [],type;
         this.each( function(item){
             type = typeOf(item);
-            if ( type == 'element' ) elements.push(item);
-            //if ( item.grab /*isElement*/ ) elements.push(item);
-            else if ( type == 'elements' ) elements.append(item);
+            if ( type == 'elements' ) elements.append(item);
+            else if ( item.grab /*isElement*/ ) elements.push(item);
             else if ( item.big  /*isString*/ ) elements.push(new Element(item));
             else if ( type == 'object' ) elements.getLast().set(item);
             else if ( item.pop /*isArray*/ ) elements.getLast().adopt(item.rendAr());
