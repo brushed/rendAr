@@ -26,25 +26,27 @@ Element.Properties.attach = {
     //Usage:
     //    new Element('div',{ attach:[this] }); //this.element now refers to div
     //    new Element('div',{ attach:[this,'myproperty'] }); //this.myproperty now refers to div
-    //    ['div',{attach:[this,'myproperty'] }].rendAr();
+    //    ['div',{ attach:[this,'myproperty'] }].rendAr();
 
-    set: function(object) {
-
-        object[0][ object[1]||'element' ] = this;
-
+    set: function( object ){
+        object[0][ object[1] || 'element' ] = this;
     }
+
 };
+
+
 Array.implement({
 
     rendAr: function() {
       var elements = [],type;
         this.each( function(item){
             type = typeOf(item);
-            if (type == 'element')  elements.push(item);
-            else if (type == 'string')   elements.push(new Element(item));
-            else if (type == 'object')   elements.getLast().set(item);
-            else if (type == 'array')    elements.getLast().adopt(item.rendAr());
-            else if (type == 'elements') elements.append(item);
+            if ( type == 'element' ) elements.push(item);
+            //if ( item.grab /*isElement*/ ) elements.push(item);
+            else if ( type == 'elements' ) elements.append(item);
+            else if ( item.big  /*isString*/ ) elements.push(new Element(item));
+            else if ( type == 'object' ) elements.getLast().set(item);
+            else if ( item.pop /*isArray*/ ) elements.getLast().adopt(item.rendAr());
          });
       return elements[1] ? new Elements(elements) : elements[0];
    }
