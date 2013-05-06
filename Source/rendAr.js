@@ -23,14 +23,16 @@ requires:
 */
 Element.Properties.attach = {
 
-    //Usage:
-    //    new Element('div',{ attach:[this] }); //this.element now refers to div
-    //    new Element('div',{ attach:[this,'myproperty'] }); //this.myproperty now refers to div
-    //    ['div',{ attach:[this,'myproperty'] }].rendAr();
+	//Usage:
+	//	new Element('div',{ attach:this });		//this.element now refers to div
+	//	new Element('div',{ attach:[this] });	//this.element now refers to div
+	//	new Element('div',{ attach:[this,'myproperty'] }); //this.myproperty now refers to div
+	//	['div',{attach:[this,'myproperty'] }].rendAr();
 
-    set: function( object ){
-        object[0][ object[1] || 'element' ] = this;
-    }
+	set: function( object ){
+		if(!object[0]) object = [object];
+		object[0][ object[1] || 'element' ] = this;
+	}
 
 };
 
